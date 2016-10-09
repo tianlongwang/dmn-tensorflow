@@ -1,6 +1,9 @@
+*.pyc
 save/
 logs/
 data/
 data
 .idea/
 __pycache__
+*.zip
+*.gz
