@@ -9,13 +9,13 @@ from utils.data_utils import load_glove, WordTable
 flags = tf.app.flags
 
 # directories
-flags.DEFINE_string('model', 'dmn+', 'Model type - dmn+, dmn, dmn_embed [Default: DMN+]')
+flags.DEFINE_string('model', 'dmn', 'Model type - dmn+, dmn, dmn_embed [Default: DMN+]')
 flags.DEFINE_boolean('test', False, 'true for testing, false for training [False]')
 flags.DEFINE_string('data_dir', 'data/tasks_1-20_v1-2/en-10k', 'Data directory [data/tasks_1-20_v1-2/en-10k]')
 flags.DEFINE_string('save_dir', 'save', 'Save path [save]')
 
 # training options
-flags.DEFINE_bool('gpu', True, 'Use GPU? [True]')
+flags.DEFINE_bool('gpu', False, 'Use GPU? [True]')
 flags.DEFINE_integer('batch_size', 128, 'Batch size during training and testing [128]')
 flags.DEFINE_integer('num_epochs', 256, 'Number of epochs for training [256]')
 flags.DEFINE_float('learning_rate', 0.002, 'Learning rate [0.002]')
@@ -72,7 +72,7 @@ def main(_):
     # Modify save dir
     FLAGS.save_dir += '/task_%d/' % FLAGS.task
     if not os.path.exists(FLAGS.save_dir):
-        os.makedirs(FLAGS.save_dir, exist_ok=True)
+        os.makedirs(FLAGS.save_dir)#, exist_ok=True)
 
     with tf.Session() as sess:
         model = DMN(FLAGS, words)
