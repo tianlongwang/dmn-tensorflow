@@ -68,7 +68,8 @@ class WordTable:
     def add_vocab(self, *words):
         """ Add vocabularies to dictionary. """
         for word in words:
-            if self.word2vec and word not in self.word2vec:
+            print(word)
+            if self.word2vec and (word not in self.word2vec):
                 self._create_vector(word)
 
             if word not in self.word2idx:

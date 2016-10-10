@@ -78,7 +78,7 @@ class DMN(BaseModel):
 
         with tf.variable_scope('Accuracy'):
             # Accuracy
-            predicts = tf.cast(tf.argmax(logits, 1), 'int32')
+            predicts = tf.cast(tf.argmax(logits, 1), 'int64')
             corrects = tf.equal(predicts, answer)
             num_corrects = tf.reduce_sum(tf.cast(corrects, tf.float32))
             accuracy = tf.reduce_mean(tf.cast(corrects, tf.float32))
