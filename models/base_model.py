@@ -64,6 +64,8 @@ class BaseModel(object):
         for _ in range(num_batches):
             batch = data.next_batch()
             cur_num_corrects, cur_loss, global_step = self.test_batch(sess, batch)
+            print('cur_num_corrects, cur_loss, global_step, name')
+            print(cur_num_corrects, cur_loss, global_step, name)
             num_corrects += cur_num_corrects
             total += len(batch[0])
             losses.append(cur_loss)

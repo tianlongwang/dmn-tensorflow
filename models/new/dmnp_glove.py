@@ -37,7 +37,6 @@ class DMN(BaseModel):
 
         tf.assign(embedding, emb_init)
         #embedding = weight('embedding', [A, V], init='uniform', range=3**(1/2))
-        ipdb.set_trace()
 
         with tf.name_scope('SentenceReader'):
             input_list = tf.unpack(tf.transpose(input))  # L x [F, N]

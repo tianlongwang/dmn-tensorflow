@@ -16,11 +16,11 @@ flags.DEFINE_string('save_dir', 'save', 'Save path [save]')
 
 # training options
 flags.DEFINE_bool('gpu', False, 'Use GPU? [True]')
-flags.DEFINE_integer('batch_size', 128, 'Batch size during training and testing [128]')
-flags.DEFINE_integer('num_epochs', 256, 'Number of epochs for training [256]')
-flags.DEFINE_float('learning_rate', 0.002, 'Learning rate [0.002]')
+flags.DEFINE_integer('batch_size', 256, 'Batch size during training and testing [256]')
+flags.DEFINE_integer('num_epochs', 256, 'Number of epochs for training [32]')
+flags.DEFINE_float('learning_rate', 0.003, 'Learning rate [0.003]')
 flags.DEFINE_boolean('load', False, 'Start training from saved model? [False]')
-flags.DEFINE_integer('acc_period', 10, 'Training accuracy display period [10]')
+flags.DEFINE_integer('acc_period', 1, 'Training accuracy display period [10]')
 flags.DEFINE_integer('val_period', 40, 'Validation period (for display purpose) [40]')
 flags.DEFINE_integer('save_period', 80, 'Save period [80]')
 
