@@ -36,6 +36,7 @@ class DMN(BaseModel):
         embedding = tf.get_variable('embedding', [A,V])
 
         tf.assign(embedding, emb_init)
+        tf.add_to_collection('l2', tf.nn.l2_loss(embedding))  # Add L2 Loss
         #embedding = weight('embedding', [A, V], init='uniform', range=3**(1/2))
 
         with tf.name_scope('SentenceReader'):
