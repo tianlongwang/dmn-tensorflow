@@ -6,6 +6,7 @@ from models.base_model import BaseModel
 from models.old.episode_module import EpisodeModule
 from utils.nn import weight, batch_norm, dropout
 
+import ipdb
 
 class DMN(BaseModel):
     """ Dynamic Memory Networks (http://arxiv.org/abs/1506.07285)
@@ -21,7 +22,7 @@ class DMN(BaseModel):
         # placeholders
         input = tf.placeholder(tf.float32, shape=[N, L, V], name='x')  # [num_batch, sentence_len, glove_dim]
         question = tf.placeholder(tf.float32, shape=[N, Q, V], name='q')  # [num_batch, sentence_len, glove_dim]
-        answer = tf.placeholder(tf.int64, shape=[N], name='y')  # [num_batch] - one word answer
+        answer = tf.placeholder(tf.int32, shape=[N], name='y')  # [num_batch] - one word answer
         input_mask = tf.placeholder(tf.bool, shape=[N, L], name='x_mask')  # [num_batch, sentence_len]
         is_training = tf.placeholder(tf.bool)
 
@@ -131,7 +132,8 @@ class DMN(BaseModel):
         new_labels = []
 
         for n in range(N):
-            sentence = np.array(input[n]).flatten()  # concat all sentences
+            print(input[n])
+            sentence = np.array(input[n][0]).flatten()  # concat all sentences
             sentence_len = len(sentence)
 
             input_mask = [index for index, w in enumerate(sentence) if w == '.']
@@ -145,6 +147,7 @@ class DMN(BaseModel):
             # mask on
             for eos_index in input_mask:
                 new_mask[n, eos_index] = True
+        ipdb.set_trace()
 
         return new_input, new_question, new_labels, new_mask
 

@@ -87,6 +87,8 @@ class WordTable:
     def _create_vector(self, word):
         # if the word is missing from Glove, create some fake vector and store in glove!
         vector = np.random.uniform(0.0, 1.0, (self.embed_size,))
+        if word == '<eos>':
+            vector = np.zeros(self.embed_size)
         self.word2vec[word] = vector
         print("create_vector => %s is missing" % word)
         return vector
