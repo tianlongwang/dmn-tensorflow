@@ -31,8 +31,8 @@ class DMN(BaseModel):
 
         # Prepare parameters
         gru = rnn_cell.GRUCell(d)
-        l = self.positional_encoding(self.max_sent_size, self.embed_size)
-        ls = self.positional_encoding(self.max_answer_size, self.embed_size)
+        l = self.positional_encoding(L, V)
+        ls = self.positional_encoding(As, V)
         embedding = weight('embedding', [A, V], init='uniform', range=3**(1/2))
 
         with tf.name_scope('SentenceReader'):
@@ -74,7 +74,8 @@ class DMN(BaseModel):
             ans_embed = []
             for ans_single in ans_list:
                 ans_single = tf.unpack(ans_single) # Ac * [N]
-                embed = tf.pack([tf.nn.embedding_loopup(embedding, w) for w in facts]) # [Ac, N, V]
+                #print('ans_single', ans_single)
+                embed = tf.pack([tf.nn.embedding_lookup(embedding, w) for w in ans_single]) # [Ac, N, V]
                 ans_embed.append(embed)# As * [Ac, N, V]
 
             #apply positional coding on answer
@@ -123,19 +124,21 @@ class DMN(BaseModel):
             l_generated_answer = tf.reshape(l_generated_answer, [N, Ac, V]) #[N, Ac, V]
             as_ans = tf.sub(processed_answers, l_generated_answer)
             logits = tf.reduce_sum(as_ans, 2) # [N, Ac]
+            print('Ac', Ac)
+            print('logits', logits)
             #logits = tf.matmul(memory, w_a)  # [N, A]
 
 
         with tf.name_scope('Loss'):
             # Cross-Entropy loss
-            cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits, answer)
+            cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits, label)
             loss = tf.reduce_mean(cross_entropy)
             total_loss = loss + params.weight_decay * tf.add_n(tf.get_collection('l2'))
 
         with tf.variable_scope('Accuracy'):
             # Accuracy
             predicts = tf.cast(tf.argmax(logits, 1), 'int32')
-            corrects = tf.equal(predicts, answer)
+            corrects = tf.equal(predicts, label)
             num_corrects = tf.reduce_sum(tf.cast(corrects, tf.float32))
             accuracy = tf.reduce_mean(tf.cast(corrects, tf.float32))
 
@@ -200,6 +203,7 @@ class DMN(BaseModel):
 
             for i, ans_sentence in enumerate(answer,1):
                 ans_sentence_len = len(ans_sentence)
+                print('ans_sentence', ans_sentence)
                 new_answer[n, i, :ans_sentence_len] = [self.words.word_to_index(w) for w in ans_sentence]
                 answer_masks[n, i, :ans_sentence_len, :] = 1. # mask for answer
             new_labels.append(label[n])

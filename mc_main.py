@@ -8,7 +8,7 @@ from utils.mc_data_utils import load_glove, WordTable
 flags = tf.app.flags
 
 # directories
-flags.DEFINE_string('model', 'dmn+', 'Model type - dmn+, dmn, dmn_embed, dmn+g [Default: DMN+Glove]')
+flags.DEFINE_string('model', 'mc_dmn+', 'Model type - dmn+, dmn, dmn_embed, dmn+g [Default: DMN+Glove]')
 flags.DEFINE_boolean('test', False, 'true for testing, false for training [False]')
 flags.DEFINE_string('data_dir', 'data/traintest/', 'Data directory [data/traintest]')
 flags.DEFINE_string('save_dir', 'save', 'Save path [save]')

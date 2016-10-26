@@ -29,7 +29,7 @@ class DataSet:
         assert self.has_next_batch(), "End of epoch. Call 'complete_epoch()' to reset."
         from_, to = self.current_index, self.current_index + self.batch_size
         cur_idxs = self.indexes[from_:to]
-        xs, qs, ys, ls = zip(*[[self.xs[i], self.qs[i], self.ys[i]] for i in cur_idxs])
+        xs, qs, ys, ls = zip(*[[self.xs[i], self.qs[i], self.ys[i], self.ls[i]] for i in cur_idxs])
         self.current_index += self.batch_size
         return xs, qs, ys, ls
 
@@ -68,7 +68,8 @@ class WordTable:
 
     def add_vocab(self, *words):
         """ Add vocabularies to dictionary. """
-        for word in words:
+        if type(words) == str:
+            word = words
             if self.word2vec and (word not in self.word2vec):
                 self._create_vector(word)
 
@@ -76,6 +77,16 @@ class WordTable:
                 index = len(self.idx2word)
                 self.word2idx[word] = index
                 self.idx2word.append(word)
+
+        if type(words) == list:
+            for word in words:
+                if self.word2vec and (word not in self.word2vec):
+                    self._create_vector(word)
+
+                if word not in self.word2idx:
+                    index = len(self.idx2word)
+                    self.word2idx[word] = index
+                    self.idx2word.append(word)
 
     def vectorize(self, word):
         """ Converts word to vector.
