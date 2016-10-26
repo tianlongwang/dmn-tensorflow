@@ -147,7 +147,6 @@ class DMN(BaseModel):
             # mask on
             for eos_index in input_mask:
                 new_mask[n, eos_index] = True
-        ipdb.set_trace()
 
         return new_input, new_question, new_labels, new_mask
 

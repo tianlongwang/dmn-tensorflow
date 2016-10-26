@@ -96,6 +96,10 @@ def read_babi(data_dir, task_id, type, batch_size, word_table):
     """
     data = load_babi(data_dir, task_id, type)
     x, q, y, fc = process_babi(data, word_table)
+    print('x', x[0])
+    print('q', q[0])
+    print('y', y[0])
+    print('fc', fc[0])
     return DataSet(batch_size, x, q, y, fc, name=type)
 
 

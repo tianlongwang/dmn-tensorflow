@@ -3,14 +3,14 @@ import os
 
 import tensorflow as tf
 
-from read_data import read_babi, get_max_sizes
-from utils.data_utils import load_glove, WordTable
+from mc_read_data import read_mc, get_max_sizes
+from utils.mc_data_utils import load_glove, WordTable
 flags = tf.app.flags
 
 # directories
 flags.DEFINE_string('model', 'dmn+', 'Model type - dmn+, dmn, dmn_embed, dmn+g [Default: DMN+Glove]')
 flags.DEFINE_boolean('test', False, 'true for testing, false for training [False]')
-flags.DEFINE_string('data_dir', 'data/tasks_1-20_v1-2/en-10k', 'Data directory [data/tasks_1-20_v1-2/en-10k]')
+flags.DEFINE_string('data_dir', 'data/traintest/', 'Data directory [data/traintest]')
 flags.DEFINE_string('save_dir', 'save', 'Save path [save]')
 
 # training options
@@ -54,8 +54,7 @@ def main(_):
         from models.new.dmn_plus import DMN
 
     elif FLAGS.model == 'mc_dmn+':
-        word2vec = load_glove(FLAGS.glove_size)
-        words = WordTable(word2vec, FLAGS.glove_size)
+        words = WordTable()
         from models.new.mc_dmn_plus import DMN
 
     elif FLAGS.model == 'dmn_embed':
@@ -66,11 +65,11 @@ def main(_):
         return
 
     # Read data
-    train = read_babi(FLAGS.data_dir, FLAGS.task, 'train', FLAGS.batch_size, words)
-    test = read_babi(FLAGS.data_dir, FLAGS.task, 'test', FLAGS.batch_size, words)
+    train = read_mc('train', FLAGS.batch_size, words)
+    test = read_mc('test', FLAGS.batch_size, words)
     val = train.split_dataset(FLAGS.val_ratio)
 
-    FLAGS.max_sent_size, FLAGS.max_ques_size, FLAGS.max_fact_count = get_max_sizes(train, test, val)
+    FLAGS.max_sent_size, FLAGS.max_ques_size, FLAGS.max_fact_count, FLAGS.max_answer_size, FLAGS.max_answer_count = get_max_sizes(train, test, val)
     print('Word count: %d, Max sentence len : %d' % (words.vocab_size, FLAGS.max_sent_size))
 
     # Modify save dir
