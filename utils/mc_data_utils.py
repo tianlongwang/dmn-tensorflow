@@ -66,7 +66,7 @@ class WordTable:
         self.idx2word = ['<eos>']  # zero padding will be <eos>
         self.embed_size = embed_size
 
-    def add_vocab(self, *words):
+    def add_vocab(self, words):
         """ Add vocabularies to dictionary. """
         if type(words) == str:
             word = words

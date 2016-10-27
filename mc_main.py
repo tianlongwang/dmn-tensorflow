@@ -20,8 +20,8 @@ flags.DEFINE_integer('num_epochs', 256, 'Number of epochs for training [32]')
 flags.DEFINE_float('learning_rate', 0.01, 'Learning rate [0.003]')
 flags.DEFINE_boolean('load', False, 'Start training from saved model? [False]')
 flags.DEFINE_integer('acc_period', 1, 'Training accuracy display period [10]')
-flags.DEFINE_integer('val_period', 40, 'Validation period (for display purpose) [40]')
-flags.DEFINE_integer('save_period', 80, 'Save period [80]')
+flags.DEFINE_integer('val_period', 10, 'Validation period (for display purpose) [40]')
+flags.DEFINE_integer('save_period', 10, 'Save period [80]')
 
 # model params
 flags.DEFINE_integer('memory_step', 3, 'Episodic Memory steps [3]')
@@ -29,11 +29,11 @@ flags.DEFINE_string('memory_update', 'relu', 'Episodic meory update method - rel
 # flags.DEFINE_bool('memory_tied', False, 'Share memory update weights among the layers? [False]')
 flags.DEFINE_integer('glove_size', 50, 'GloVe size - Only used in dmn [50]')
 flags.DEFINE_integer('embed_size', 50, 'Word embedding size - Used in dmn+, dmn_embed [80]')
-flags.DEFINE_integer('hidden_size', 80, 'Size of hidden units [80]')
+flags.DEFINE_integer('hidden_size', 50, 'Size of hidden units [80]')
 
 # train hyperparameters
 flags.DEFINE_float('weight_decay', 0.001, 'Weight decay - 0 to turn off L2 regularization [0.001]')
-flags.DEFINE_float('keep_prob', 1., 'Dropout rate - 1.0 to turn off [1.0]')
+flags.DEFINE_float('keep_prob', .9, 'Dropout rate - 1.0 to turn off [1.0]')
 flags.DEFINE_bool('batch_norm', True, 'Use batch normalization? [True]')
 
 # bAbi dataset params
@@ -64,6 +64,7 @@ def main(_):
         print('Unknown model type: %s' % FLAGS.model)
         return
 
+    print(flags.FLAGS.__dict__)
     # Read data
     train = read_mc('train', FLAGS.batch_size, words)
     test = read_mc('test', FLAGS.batch_size, words)

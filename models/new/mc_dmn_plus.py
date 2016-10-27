@@ -201,9 +201,9 @@ class DMN(BaseModel):
             sentence_len = len(question[n])
             new_question[n, :sentence_len] = [self.words.word_to_index(w) for w in question[n]]
 
-            for i, ans_sentence in enumerate(answer,1):
+            for i, ans_sentence in enumerate(answer[n]):
                 ans_sentence_len = len(ans_sentence)
-                print('ans_sentence', ans_sentence)
+                #print('ans_sentence', ans_sentence)
                 new_answer[n, i, :ans_sentence_len] = [self.words.word_to_index(w) for w in ans_sentence]
                 answer_masks[n, i, :ans_sentence_len, :] = 1. # mask for answer
             new_labels.append(label[n])

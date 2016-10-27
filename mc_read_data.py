@@ -22,7 +22,8 @@ def my_sent_tokenize(txt):
 
 def sent_to_tokens(sent, word_table):
     ret =  [lemmatizer.lemmatize(tmp) for tmp in word_tokenize(sent.lower())]
-    word_table.add_vocab(*ret)
+    #print('token', ret)
+    word_table.add_vocab(ret)
     return ret
 
 def para_to_tokens(para, word_table):

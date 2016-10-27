@@ -1,0 +1,187 @@
+Epoch:   0%|                                                                | 0/256 [00:00<?, ?it/s]Epoch:   0%|▏                                                   | 1/256 [03:19<14:07:09, 199.33s/it]Epoch:   1%|▍                                                   | 2/256 [05:49<13:01:12, 184.54s/it]Epoch:   1%|▌                                                   | 3/256 [08:22<12:18:47, 175.21s/it]Epoch:   2%|▊                                                   | 4/256 [10:55<11:48:07, 168.60s/it]Epoch:   2%|█                                                   | 5/256 [13:33<11:31:00, 165.18s/it]Epoch:   2%|█▏                                                  | 6/256 [16:11<11:20:10, 163.24s/it]Epoch:   3%|█▍                                                  | 7/256 [18:53<11:15:14, 162.71s/it]Epoch:   3%|█▋                                                  | 8/256 [21:38<11:15:29, 163.43s/it]Epoch:   4%|█▊                                                  | 9/256 [24:24<11:15:24, 164.07s/it]/home/tianlong/anaconda2/envs/python3/lib/python3.5/site-packages/numpy/core/_methods.py:59: RuntimeWarning: Mean of empty slice.
+  warnings.warn("Mean of empty slice.", RuntimeWarning)
+/home/tianlong/anaconda2/envs/python3/lib/python3.5/site-packages/numpy/core/_methods.py:70: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+
+{'__flags': {'val_period': 10, 'acc_period': 1, 'memory_update': 'relu', 'data_dir': 'data/traintest/', 'val_ratio': 0.1, 'keep_prob': 0.9, 'save_dir': 'save', 'save_period': 10, 'task': 1, 'load': False, 'gpu': False, 'num_epochs': 256, 'embed_size': 50, 'hidden_size': 50, 'weight_decay': 0.001, 'learning_rate': 0.01, 'glove_size': 50, 'memory_step': 3, 'batch_norm': True, 'model': 'mc_dmn+', 'batch_size': 128, 'test': False}, '__parsed': True}
+Load train data from  ./data/traintest/train/readworks_grade2.0.1.json
+Load train data from  ./data/traintest/train/readworks_grade1.test.0.1.json
+Load test data from  ./data/traintest/test/readworks_grade1.dev.0.1.json
+Word count: 4303, Max sentence len : 52
+Building DMN...
+l_generated_answer Tensor("DMN/MultipleChoice/Tile:0", shape=(128, 150), dtype=float32)
+Ac 3
+logits Tensor("DMN/MultipleChoice/Sum:0", shape=(128, 3), dtype=float32)
+Training 256 epochs ...
+
+cur_num_corrects, cur_loss, global_step, name
+33.0 nan 7 Training
+cur_num_corrects, cur_loss, global_step, name
+47.0 nan 7 Training
+cur_num_corrects, cur_loss, global_step, name
+42.0 nan 7 Training
+cur_num_corrects, cur_loss, global_step, name
+55.0 nan 7 Training
+cur_num_corrects, cur_loss, global_step, name
+53.0 nan 7 Training
+cur_num_corrects, cur_loss, global_step, name
+45.0 nan 7 Training
+cur_num_corrects, cur_loss, global_step, name
+44.0 nan 7 Training
+[Training] step 7: Accuracy = 35.60% (319 / 896), Loss = nan
+
+cur_num_corrects, cur_loss, global_step, name
+46.0 nan 14 Training
+cur_num_corrects, cur_loss, global_step, name
+38.0 nan 14 Training
+cur_num_corrects, cur_loss, global_step, name
+42.0 nan 14 Training
+cur_num_corrects, cur_loss, global_step, name
+44.0 nan 14 Training
+cur_num_corrects, cur_loss, global_step, name
+38.0 nan 14 Training
+cur_num_corrects, cur_loss, global_step, name
+49.0 nan 14 Training
+cur_num_corrects, cur_loss, global_step, name
+45.0 nan 14 Training
+[Training] step 14: Accuracy = 33.71% (302 / 896), Loss = nan
+
+cur_num_corrects, cur_loss, global_step, name
+36.0 nan 21 Training
+cur_num_corrects, cur_loss, global_step, name
+45.0 nan 21 Training
+cur_num_corrects, cur_loss, global_step, name
+39.0 nan 21 Training
+cur_num_corrects, cur_loss, global_step, name
+53.0 nan 21 Training
+cur_num_corrects, cur_loss, global_step, name
+37.0 nan 21 Training
+cur_num_corrects, cur_loss, global_step, name
+47.0 nan 21 Training
+cur_num_corrects, cur_loss, global_step, name
+48.0 nan 21 Training
+[Training] step 21: Accuracy = 34.04% (305 / 896), Loss = nan
+
+cur_num_corrects, cur_loss, global_step, name
+46.0 nan 28 Training
+cur_num_corrects, cur_loss, global_step, name
+37.0 nan 28 Training
+cur_num_corrects, cur_loss, global_step, name
+45.0 nan 28 Training
+cur_num_corrects, cur_loss, global_step, name
+47.0 nan 28 Training
+cur_num_corrects, cur_loss, global_step, name
+44.0 nan 28 Training
+cur_num_corrects, cur_loss, global_step, name
+47.0 nan 28 Training
+cur_num_corrects, cur_loss, global_step, name
+42.0 nan 28 Training
+[Training] step 28: Accuracy = 34.38% (308 / 896), Loss = nan
+
+cur_num_corrects, cur_loss, global_step, name
+44.0 nan 35 Training
+cur_num_corrects, cur_loss, global_step, name
+43.0 nan 35 Training
+cur_num_corrects, cur_loss, global_step, name
+45.0 nan 35 Training
+cur_num_corrects, cur_loss, global_step, name
+49.0 nan 35 Training
+cur_num_corrects, cur_loss, global_step, name
+44.0 nan 35 Training
+cur_num_corrects, cur_loss, global_step, name
+47.0 nan 35 Training
+cur_num_corrects, cur_loss, global_step, name
+42.0 nan 35 Training
+[Training] step 35: Accuracy = 35.04% (314 / 896), Loss = nan
+
+cur_num_corrects, cur_loss, global_step, name
+48.0 nan 42 Training
+cur_num_corrects, cur_loss, global_step, name
+50.0 nan 42 Training
+cur_num_corrects, cur_loss, global_step, name
+38.0 nan 42 Training
+cur_num_corrects, cur_loss, global_step, name
+48.0 nan 42 Training
+cur_num_corrects, cur_loss, global_step, name
+44.0 nan 42 Training
+cur_num_corrects, cur_loss, global_step, name
+44.0 nan 42 Training
+cur_num_corrects, cur_loss, global_step, name
+40.0 nan 42 Training
+[Training] step 42: Accuracy = 34.82% (312 / 896), Loss = nan
+
+cur_num_corrects, cur_loss, global_step, name
+43.0 nan 49 Training
+cur_num_corrects, cur_loss, global_step, name
+35.0 nan 49 Training
+cur_num_corrects, cur_loss, global_step, name
+43.0 nan 49 Training
+cur_num_corrects, cur_loss, global_step, name
+54.0 nan 49 Training
+cur_num_corrects, cur_loss, global_step, name
+50.0 nan 49 Training
+cur_num_corrects, cur_loss, global_step, name
+44.0 nan 49 Training
+cur_num_corrects, cur_loss, global_step, name
+46.0 nan 49 Training
+[Training] step 49: Accuracy = 35.16% (315 / 896), Loss = nan
+
+cur_num_corrects, cur_loss, global_step, name
+42.0 nan 56 Training
+cur_num_corrects, cur_loss, global_step, name
+42.0 nan 56 Training
+cur_num_corrects, cur_loss, global_step, name
+48.0 nan 56 Training
+cur_num_corrects, cur_loss, global_step, name
+47.0 nan 56 Training
+cur_num_corrects, cur_loss, global_step, name
+55.0 nan 56 Training
+cur_num_corrects, cur_loss, global_step, name
+38.0 nan 56 Training
+cur_num_corrects, cur_loss, global_step, name
+42.0 nan 56 Training
+[Training] step 56: Accuracy = 35.04% (314 / 896), Loss = nan
+
+cur_num_corrects, cur_loss, global_step, name
+44.0 nan 63 Training
+cur_num_corrects, cur_loss, global_step, name
+43.0 nan 63 Training
+cur_num_corrects, cur_loss, global_step, name
+47.0 nan 63 Training
+cur_num_corrects, cur_loss, global_step, name
+54.0 nan 63 Training
+cur_num_corrects, cur_loss, global_step, name
+37.0 nan 63 Training
+cur_num_corrects, cur_loss, global_step, name
+45.0 nan 63 Training
+cur_num_corrects, cur_loss, global_step, name
+48.0 nan 63 Training
+[Training] step 63: Accuracy = 35.49% (318 / 896), Loss = nan
+
+cur_num_corrects, cur_loss, global_step, name
+47.0 nan 70 Training
+cur_num_corrects, cur_loss, global_step, name
+49.0 nan 70 Training
+cur_num_corrects, cur_loss, global_step, name
+41.0 nan 70 Training
+cur_num_corrects, cur_loss, global_step, name
+41.0 nan 70 Training
+cur_num_corrects, cur_loss, global_step, name
+39.0 nan 70 Training
+cur_num_corrects, cur_loss, global_step, name
+42.0 nan 70 Training
+cur_num_corrects, cur_loss, global_step, name
+50.0 nan 70 Training
+[Training] step 70: Accuracy = 34.49% (309 / 896), Loss = nan
+Traceback (most recent call last):
+  File "mc_main.py", line 93, in <module>
+    tf.app.run()
+  File "/home/tianlong/anaconda2/envs/python3/lib/python3.5/site-packages/tensorflow/python/platform/app.py", line 30, in run
+    sys.exit(main(sys.argv))
+  File "mc_main.py", line 90, in main
+    model.train(sess, train, val)
+  File "/mnt/data1/Develop/python3.5Workspace/dmn-tensorflow/models/base_model.py", line 53, in train
+    self.eval(sess, val_data, name='Validation')
+  File "/mnt/data1/Develop/python3.5Workspace/dmn-tensorflow/models/base_model.py", line 76, in eval
+    (name, global_step, 100 * float(num_corrects) / total, num_corrects, total, loss))
+UnboundLocalError: local variable 'global_step' referenced before assignment

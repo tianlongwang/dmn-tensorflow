@@ -20,8 +20,8 @@ flags.DEFINE_integer('num_epochs', 256, 'Number of epochs for training [32]')
 flags.DEFINE_float('learning_rate', 0.01, 'Learning rate [0.003]')
 flags.DEFINE_boolean('load', False, 'Start training from saved model? [False]')
 flags.DEFINE_integer('acc_period', 1, 'Training accuracy display period [10]')
-flags.DEFINE_integer('val_period', 40, 'Validation period (for display purpose) [40]')
-flags.DEFINE_integer('save_period', 80, 'Save period [80]')
+flags.DEFINE_integer('val_period', 1, 'Validation period (for display purpose) [40]')
+flags.DEFINE_integer('save_period', 10, 'Save period [80]')
 
 # model params
 flags.DEFINE_integer('memory_step', 3, 'Episodic Memory steps [3]')
