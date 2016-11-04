@@ -7,3 +7,5 @@ __pycache__
 *.pyc
 *.zip
 *.gz
+
+/tune_results/

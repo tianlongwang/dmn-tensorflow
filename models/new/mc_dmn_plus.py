@@ -21,7 +21,7 @@ class DMN(BaseModel):
         question = tf.placeholder('int32', shape=[N, Q], name='q')  # [num_batch, question_len]
         #answer = tf.placeholder('int32', shape=[N], name='y')  # [num_batch] - one word answer
         answer = tf.placeholder('int32', shape=[N, Ac, As], name='y')  # [num_batch, answer_count, answer_size] - one word answer
-        label = tf.placeholder('int32', shape=[N], name='l') # [num_batch]
+        label = tf.placeholder('int32', shape=[N, Ac], name='l') # [num_batch]
 
         fact_counts = tf.placeholder('int64', shape=[N], name='fc')
         input_mask = tf.placeholder('float32', shape=[N, F, L, V], name='xm')
@@ -66,6 +66,9 @@ class DMN(BaseModel):
         with tf.variable_scope('Question'):
             ques_list = tf.unpack(tf.transpose(question))
             ques_embed = [tf.nn.embedding_lookup(embedding, w) for w in ques_list]
+            ques_embed1 = tf.nn.embedding_lookup(question, w)
+            print('ques_embed', ques_embed)
+            print('ques_embed1', ques_embed1)
             _, question_vec = tf.nn.rnn(gru, ques_embed, dtype=tf.float32)
 
 
@@ -84,6 +87,7 @@ class DMN(BaseModel):
             processed_answers = tf.reduce_sum(encoded, 2) #[ N, Ac, V]
 
         # Episodic Memory
+        print('build episodic memory')
         with tf.variable_scope('Episodic'):
             episode = EpisodeModule(d, question_vec, facts, is_training, params.batch_norm)
             memory = tf.identity(question_vec)
@@ -108,7 +112,7 @@ class DMN(BaseModel):
 
                     scope.reuse_variables()
 
-        # Regularizations
+        print('Regularizations')
         if params.batch_norm:
             memory = batch_norm(memory, is_training=is_training)
         memory = dropout(memory, params.keep_prob, is_training)
@@ -129,18 +133,25 @@ class DMN(BaseModel):
             #logits = tf.matmul(memory, w_a)  # [N, A]
 
 
+        print('loss')
         with tf.name_scope('Loss'):
             # Cross-Entropy loss
-            cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits, label)
-            loss = tf.reduce_mean(cross_entropy)
-            total_loss = loss + params.weight_decay * tf.add_n(tf.get_collection('l2'))
+            #cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits, label)
+            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits, tf.cast(label, tf.float32), name='cross_entropy')
+            loss = tf.reduce_sum(cross_entropy)
+            total_loss = loss
+            #+ params.weight_decay * tf.add_n(tf.get_collection('l2'))
+
+        print('Accuracy')
 
         with tf.variable_scope('Accuracy'):
             # Accuracy
             predicts = tf.cast(tf.argmax(logits, 1), 'int32')
-            corrects = tf.equal(predicts, label)
+            s_label = tf.cast(tf.argmax(label, 1), 'int32')
+            corrects = tf.equal(predicts, s_label)
             num_corrects = tf.reduce_sum(tf.cast(corrects, tf.float32))
             accuracy = tf.reduce_mean(tf.cast(corrects, tf.float32))
+        print('optimizer')
 
         # Training
         optimizer = tf.train.AdamOptimizer(params.learning_rate)
@@ -161,6 +172,7 @@ class DMN(BaseModel):
         self.num_corrects = num_corrects
         self.accuracy = accuracy
         self.opt_op = opt_op
+        print('Finish Building Model')
 
     def positional_encoding(self, max_sent_size, embed_size):
         D, M = embed_size, max_sent_size
@@ -206,7 +218,9 @@ class DMN(BaseModel):
                 #print('ans_sentence', ans_sentence)
                 new_answer[n, i, :ans_sentence_len] = [self.words.word_to_index(w) for w in ans_sentence]
                 answer_masks[n, i, :ans_sentence_len, :] = 1. # mask for answer
-            new_labels.append(label[n])
+            lb = np.zeros(Ac)
+            lb[int(label[n])] = 1
+            new_labels.append(lb)
 
         return new_input, new_question, new_answer, new_labels, fact_counts, input_masks, answer_masks
 

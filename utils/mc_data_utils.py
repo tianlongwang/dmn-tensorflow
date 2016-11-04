@@ -34,7 +34,7 @@ class DataSet:
         return xs, qs, ys, ls
 
     def has_next_batch(self):
-        return self.current_index + self.batch_size <= self.count
+        return self.current_index + self.batch_size  <= self.count
 
     def split_dataset(self, split_ratio):
         """ Splits a data set by split_ratio.
@@ -42,13 +42,22 @@ class DataSet:
         :param split_ratio: ratio of train data
         :return: val_set
         """
-        end_index = int(self.count * (1 - split_ratio))
+        end_index = int(self.count * (1. - split_ratio))
+        print('split_ratio', split_ratio)
+        print('self.count',self.count)
+        print('end_index', end_index)
+
 
         # do not (deep) copy data - just modify index list!
         val_set = copy.copy(self)
         val_set.count = self.count - end_index
+        print('val_set.count', val_set.count)
+        print('batch_size', self.batch_size)
+        if(val_set.count < self.batch_size):
+            print("WARNING: known bug when valuation set length smaller than batch size")
         val_set.indexes = list(range(end_index, self.count))
-        val_set.num_batches = int(val_set.count / val_set.batch_size)
+        val_set.num_batches = int(val_set.count / val_set.batch_size )#when val smaller than a batch, fixed it
+        print('val_set.num_batches', val_set.num_batches)
         self.count = end_index
         self.setup()
         return val_set

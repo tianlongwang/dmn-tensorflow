@@ -15,12 +15,12 @@ flags.DEFINE_string('save_dir', 'save', 'Save path [save]')
 
 # training options
 flags.DEFINE_bool('gpu', False, 'Use GPU? [True]')
-flags.DEFINE_integer('batch_size', 128, 'Batch size during training and testing [256]')
+flags.DEFINE_integer('batch_size', 64, 'Batch size during training and testing [256]')
 flags.DEFINE_integer('num_epochs', 256, 'Number of epochs for training [32]')
 flags.DEFINE_float('learning_rate', 0.01, 'Learning rate [0.003]')
 flags.DEFINE_boolean('load', False, 'Start training from saved model? [False]')
 flags.DEFINE_integer('acc_period', 1, 'Training accuracy display period [10]')
-flags.DEFINE_integer('val_period', 10, 'Validation period (for display purpose) [40]')
+flags.DEFINE_integer('val_period', 1, 'Validation period (for display purpose) [40]')
 flags.DEFINE_integer('save_period', 10, 'Save period [80]')
 
 # model params
@@ -69,6 +69,7 @@ def main(_):
     train = read_mc('train', FLAGS.batch_size, words)
     test = read_mc('test', FLAGS.batch_size, words)
     val = train.split_dataset(FLAGS.val_ratio)
+    print('val count', val.count)
 
     FLAGS.max_sent_size, FLAGS.max_ques_size, FLAGS.max_fact_count, FLAGS.max_answer_size, FLAGS.max_answer_count = get_max_sizes(train, test, val)
     print('Word count: %d, Max sentence len : %d' % (words.vocab_size, FLAGS.max_sent_size))
@@ -80,6 +81,7 @@ def main(_):
 
     with tf.Session() as sess:
         model = DMN(FLAGS, words)
+        print('initialize')
         sess.run(tf.initialize_all_variables())
 
         if FLAGS.test:

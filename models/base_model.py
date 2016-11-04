@@ -58,11 +58,16 @@ class BaseModel(object):
         print("Training completed.")
 
     def eval(self, sess, data, name):
+        print('name', name)
+
         num_batches = data.num_batches
         num_corrects = total = 0
         losses = []
+        global_step = self.global_step#valuation bug, hacky fix TODO
+        print(num_batches)
         for _ in range(num_batches):
             batch = data.next_batch()
+            #print('batch', batch)
             cur_num_corrects, cur_loss, global_step = self.test_batch(sess, batch)
             print('cur_num_corrects, cur_loss, global_step, name')
             print(cur_num_corrects, cur_loss, global_step, name)
